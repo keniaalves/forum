@@ -10,7 +10,7 @@ class ThreadsTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * Lança exceções
+     * Lança exceções, fornece as threads.
      *
      * @return void
      */
@@ -18,30 +18,42 @@ class ThreadsTest extends TestCase
     {
         parent::setUp();
         $this->withoutExceptionHandling();
+
+        $this->thread = factory('App\Thread')->create();
     }
 
     /**
-     * Listagem de Threads
+     * Testa listagem de Threads
      * @test
      * */
     public function testSeeAllThreads()
     {
-        $thread   = factory('App\Thread')->create();
-        $response = $this->get('/threads');
-
-        $response->assertStatus(200);
-        $response->assertSee($thread->title);
+        $response = $this->get('/threads')
+            ->assertStatus(200);
+        $response->assertSee($this->thread->title);
     }
 
     /**
-     * Visualização de Thread específico
+     * Testa visualização de Thread específico
      *
      * @test
      */
     public function testReadASingleThread()
     {
-        $thread   = factory('App\Thread')->create();
-        $response = $this->get('/threads/' . $thread->id);
-        $response->assertSee($thread->title);
+        $this->get('/threads/' . $this->thread->id)
+            ->assertSee($this->thread->title);
+    }
+
+    /**
+     * Testa se um usuário pode ver respostas associadas a um thread.
+     *
+     * @test
+     */
+    public function testReadThreadReplies()
+    {
+        $reply = factory('App\Reply')
+            ->create(['thread_id' => $this->thread->id]);
+        $this->get('/threads/' . $this->thread->id)
+            ->assertSee($reply->body);
     }
 }
