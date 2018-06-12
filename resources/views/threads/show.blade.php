@@ -8,6 +8,7 @@
                 <div class="card-header">Threads</div>
                 <div class="card-body">
                         <div class="alert alert-info">
+                            <a href="#">{{$thread->owner->name}}</a> posted:
                             <strong>{{ $thread->title }}</strong>
                             <hr>
                             {{ $thread->body}}
@@ -23,12 +24,7 @@
                 <div class="card-header">Replies</div>
                 <div class="card-body">
                     @foreach($thread->replies as $reply)
-                        <div class="alert alert-default">
-                            {{ $reply->created_at->diffForHumans() }} |
-                            <a href="#">{{$reply->owner->name}}</a>
-                            <hr>
-                            {{ $reply->body}}
-                        </div>
+                        @include ('threads.reply')
                     @endforeach
                 </div>
             </div>

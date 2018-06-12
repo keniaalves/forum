@@ -10,10 +10,10 @@ class ReplyTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * Testa se a resposta tem um dono.
+     * Testa se o reply tem um dono. Testa a relação.
      * @test
      */
-    public function testHasAnOwner()
+    public function it_has_an_owner()
     {
         $reply = factory('App\Reply')->create();
 
