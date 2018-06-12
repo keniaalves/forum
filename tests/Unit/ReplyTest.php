@@ -13,7 +13,7 @@ class ReplyTest extends TestCase
      * Testa se o reply tem um dono. Testa a relação.
      * @test
      */
-    public function it_has_an_owner()
+    public function test_it_has_an_owner()
     {
         $reply = factory('App\Reply')->create();
 

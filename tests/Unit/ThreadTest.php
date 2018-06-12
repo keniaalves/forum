@@ -21,7 +21,7 @@ class ThreadTest extends TestCase
      * Testa se o thread deveria ter resposta. Testa a relação.
      * @test
      */
-    public function a_thread_has_replies()
+    public function test_a_thread_has_replies()
     {
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->thread->replies);
     }
@@ -30,17 +30,18 @@ class ThreadTest extends TestCase
      * Testa se o thread deveria ter dono. Testa a relação.
      * @test
      */
-    public function a_thread_has_a_creator()
+    public function test_a_thread_has_a_creator()
     {
         $this->assertInstanceOf('App\User', $this->thread->owner);
     }
 
     /**
      * Testa se uma thread pode adicionar uma reply.
+     * Testa a relação no model.
      *
      * @return void
      */
-    public function a_thread_can_add_a_reply()
+    public function test_a_thread_can_add_a_reply()
     {
         $this->thread->addReply([
             'body'   => 'Foobar',

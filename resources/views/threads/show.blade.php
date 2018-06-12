@@ -31,5 +31,21 @@
         </div>
     </div>
 
+@if(auth()->check())
+    <div style="padding-top: 50px;padding-bottom: 50px;" class="row justify-content-center">
+        <div class="col-md-8">
+            <form action="{{$thread->path() . '/replies'}}" method="POST">
+            {{ csrf_field() }} 
+                
+                <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Have something to say?"></textarea>
+
+                <button type="submit" class="btn btn-default">Post</button>
+            </form>
+        </div>
+    </div>
+@else
+    <p class="text-center" >Please  <a href="{{route('login')}}">sign in</a> to participate in this discussion.</p>
+@endif
+
 </div>
 @endsection
