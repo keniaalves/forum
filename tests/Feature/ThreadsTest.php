@@ -45,7 +45,7 @@ class ThreadsTest extends TestCase
     }
 
     /**
-     * Testa se um usuário pode ver respostas associadas a um thread.
+     * Testa se um usuário pode ler respostas associadas a um thread.
      *
      * @test
      */
