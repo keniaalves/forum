@@ -37,7 +37,7 @@
             <form action="{{$thread->path() . '/replies'}}" method="POST">
             {{ csrf_field() }} 
                 
-                <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Have something to say?"></textarea>
+                <textarea name="body" id="" cols="30" rows="4" class="form-control" placeholder="Have something to say?"></textarea>
 
                 <button type="submit" class="btn btn-default">Post</button>
             </form>

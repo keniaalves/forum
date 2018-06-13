@@ -17,7 +17,6 @@ class ThreadsTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->withoutExceptionHandling();
 
         $this->thread = factory('App\Thread')->create();
     }

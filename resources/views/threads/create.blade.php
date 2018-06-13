@@ -9,9 +9,10 @@
 
                 <div class="card-body">
                     <form action="{{route('threads.store')}}" method="POST">
+                        {{ csrf_field() }} 
                         <div class="form-group">
                             <label for="">Title:</label>
-                            <input type="text" class="form-control" id="title" placeholder="title">
+                            <input type="text" class="form-control" id="title" placeholder="title" name="title">
                         </div>
                         <div class="form-group">
                             <label for="">Body:</label>
