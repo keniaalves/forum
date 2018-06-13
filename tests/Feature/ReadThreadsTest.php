@@ -18,7 +18,7 @@ class ThreadsTest extends TestCase
     {
         parent::setUp();
 
-        $this->thread = factory('App\Thread')->create();
+        $this->thread = create('App\Thread');
     }
 
     /**
@@ -55,5 +55,20 @@ class ThreadsTest extends TestCase
 
         $this->get($this->thread->path())
             ->assertSee($reply->body);
+    }
+
+    public function test_a_user_can_filter_threads_according_to_a_tag()
+    {
+        $channel = create('App\Channel');
+
+        $threadInChannel = factory('App\Thread')
+            ->create(['channel_id' => $channel->id]);
+
+        // $threadNotInChannel = factory('App\Thread')
+        // ->create(['channel_id' => 2]);
+
+        $this->get('/threads/' . $channel->slug)
+            ->assertSee($threadInChannel->title)
+            ->assertDontSee($this->thread->title);
     }
 }

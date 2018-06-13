@@ -47,7 +47,7 @@ class CreateThreadTest extends TestCase
 
     /**
      * Testam se um usuário logado consegue fazer um post
-     * com dados inválidos.
+     * de threads com dados inválidos.
      *
      * @test
      */

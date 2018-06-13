@@ -39,7 +39,12 @@ class ParticipateInForumTest extends TestCase
         $this->get($thread->path())
             ->assertSee($reply->body);
     }
-
+/**
+ * Testa se um usuário logado consegue fazer um post
+ * de replies com dados inválidos.
+ *
+ * @return void
+ */
     public function test_a_reply_requires_a_body()
     {
         $this->withExceptionHandling()->signIn();
