@@ -16,9 +16,9 @@ class ParticipateInForumTest extends TestCase
      */
     public function test_unauthenticated_user_may_not_add_in_forum_replies()
     {
-        $this->expectException('Illuminate\Auth\AuthenticationException');
-
-        $this->post('/threads/1/replies', []);
+        $this->withExceptionHandling()
+            ->post('/threads/some-channel/1/replies', [])
+            ->assertRedirect('/login');
     }
 
     /**

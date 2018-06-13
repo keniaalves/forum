@@ -15,7 +15,7 @@ class Thread extends Model
      */
     public function path()
     {
-        return '/threads/' . $this->id;
+        return "/threads/{$this->channel->slug}/{$this->id}";
     }
 
     /**
@@ -37,12 +37,22 @@ class Thread extends Model
     }
 
     /**
-     * Undocumented function
+     * Aqui eu digo que threads podem adicionar respostas.
      *
      * @return void
      */
     public function addReply($reply)
     {
         $this->replies()->create($reply);
+    }
+
+    /**
+     * Aqui eu digo que um canal pode ter threads.
+     *
+     * @return void
+     */
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class);
     }
 }

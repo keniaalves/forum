@@ -10,34 +10,26 @@ class CreateThreadTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * Testa se usuário convidado pode criar threads.
+     * Testa se o usuário convidado, ao tentar acessar a página de
+     * criação de threads e tentar enviar dados em um post para a
+     * rota que salva uma thread, será redirecionado para a página de login.
      *
      * @test
      */
-    public function test_guest_may_not_create_threads()
+    public function test_guest_cannot_create_thread()
     {
         $this->withExceptionHandling();
 
+        $this->get('/threads/create')
+            ->assertRedirect('/login');
+
         $thread = make('App\Thread');
         $this->post('/threads', $thread->toArray())
-            ->assertRedirect('/login');
+                ->assertRedirect('/login');
     }
 
     /**
-     * Testa se o usuário convidado pode ver a página de criação
-     * de threads.
-     *
-     * @test
-     */
-    public function test_guest_cannot_see_create_thread_page()
-    {
-        $this->withExceptionHandling()
-            ->get('/threads/create')
-            ->assertRedirect('/login');
-    }
-
-    /**
-     * Testa se um usuário pode criar um thread e vê-lo.
+     * Testa se um usuário logado pode criar um thread e vê-lo.
      *
      * @test
      */
@@ -45,7 +37,7 @@ class CreateThreadTest extends TestCase
     {
         $this->signIn();
 
-        $thread = make('App\Thread');
+        $thread = create('App\Thread');
         $this->post('/threads', $thread->toArray());
 
         $this->get($thread->path())
