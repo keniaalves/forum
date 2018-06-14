@@ -26,7 +26,7 @@ class ThreadsController extends Controller
      */
     public function index(Channel $channel)
     {
-        $threads = Thread::latest()->get();
+        $threads = Thread::latest();
         //Como eu tinha feito,usando somente $channelSlug = null como parâmetro:
         // if ($channelSlug) {
         //     $threads = Thread::join('channels', 'threads.channel_id', 'channels.id')
@@ -36,8 +36,16 @@ class ThreadsController extends Controller
         // }
 
         if ($channel->exists) {
-            $threads = $channel->threads()->latest()->get();
+            $threads = $channel->threads()->latest();
         }
+
+        if ($username = request('by')) {
+            $user = \App\User::where('name', $username)->firstOrFail();
+
+            $threads->where('user_id', $user->id);
+        }
+
+        $threads = $threads->get();
 
         return view('threads.index', compact('threads'));
     }

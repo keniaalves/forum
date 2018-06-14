@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class ThreadsTest extends TestCase
+class ReadThreadsTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -57,6 +57,12 @@ class ThreadsTest extends TestCase
             ->assertSee($reply->body);
     }
 
+    /**
+     * Testa se, quando o usuário acessa uma rota de listagem de threads filtrando
+     * pelo channel, ele consegue ver somente os threads daquele channel e não outros.
+     *
+     * @return void
+     */
     public function test_a_user_can_filter_threads_according_to_a_channel()
     {
         $channel = create('App\Channel');
@@ -67,5 +73,25 @@ class ThreadsTest extends TestCase
         $this->get('/threads/' . $channel->slug)
             ->assertSee($threadInChannel->title)
             ->assertDontSee($this->thread->title);
+    }
+
+    /**
+     * Pela url o usuário consegue acessar threads de usuários específicos e
+     * pelo menu, tem acesso aos seus threads.
+     *
+     * Esse método testa se um usuário pode filtrar threads por qualquer
+     * nome de usuário.
+     *
+     * @return void
+     */
+    public function test_a_user_can_filter_threads_by_any_username()
+    {
+        $this->signIn(create('App\User', ['name' => 'kenia']));
+        $threadByKenia    = create('App\Thread', ['user_id' => auth()->id()]);
+        $threadNotByKenia = create('App\Thread');
+
+        $this->get('threads?by=kenia')
+            ->assertSee($threadByKenia->title)
+            ->assertDontSee($threadNotByKenia->title);
     }
 }

@@ -34,17 +34,29 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li><a href="/threads">All threads</a></li>
-                        <li><a href="/threads/create">New thread</a></li>
+                    <li class="nav-item "><a class="nav-link active" href="/threads/create">New thread</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Browse
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a href="/threads">All threads</a></li>
+                                @if (auth()->check())
+                                <li><a href="/threads?by={{ auth()->user()->name }}">My threads</a></li>
+                                @endif
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Channels
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @foreach ($channels as $channel)
-                                <a class="dropdown-item" href="/threads/{{ $channel->slug }}">{{$channel->name}}</a>
+                                <li><a class="dropdown-item" href="/threads/{{ $channel->slug }}">{{$channel->name}}</a></li>
                             @endforeach
-                            </div>
+                            </ul>
                         </li>
                         <li class="nav-item">
                     </ul>
