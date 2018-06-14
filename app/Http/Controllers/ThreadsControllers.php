@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Thread;
+use App\Channel;
 use Illuminate\Http\Request;
 
 class ThreadsController extends Controller
@@ -14,17 +15,28 @@ class ThreadsController extends Controller
 
     /**
      * Display a listing of the resource.
+     * Se tiver uma lista de channels associada ele mostra somente
+     * as threads daquele chennel. Isso se dá por duas rotas:
+     * Uma que mostra todas as threads e outra que mostra somente
+     * as threads de uma channel específica. Essa segunda rota pede
+     * um parâmetro que é o slug da channel.
      *
+     * @param Channel $channel
      * @return \Illuminate\Http\Response
      */
-    public function index($channelSlug = null)
+    public function index(Channel $channel)
     {
         $threads = Thread::latest()->get();
-        if ($channelSlug) {
-            $threads = Thread::join('channels', 'threads.channel_id', 'channels.id')
-            ->where('channels.slug', $channelSlug)
-            ->orderBy('threads.created_at', 'desc')
-            ->get();
+        //Como eu tinha feito,usando somente $channelSlug = null como parâmetro:
+        // if ($channelSlug) {
+        //     $threads = Thread::join('channels', 'threads.channel_id', 'channels.id')
+        //     ->where('channels.slug', $channelSlug)
+        //     ->orderBy('threads.created_at', 'desc')
+        //     ->get();
+        // }
+
+        if ($channel->exists) {
+            $threads = $channel->threads()->latest()->get();
         }
 
         return view('threads.index', compact('threads'));
