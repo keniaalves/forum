@@ -82,7 +82,7 @@ class ReadThreadsTest extends TestCase
      * Esse método testa se um usuário pode filtrar threads por qualquer
      * nome de usuário.
      *
-     * @return void
+     * @test
      */
     public function test_a_user_can_filter_threads_by_any_username()
     {

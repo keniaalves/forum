@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Thread;
 use App\Channel;
 use Illuminate\Http\Request;
+use App\Filters\ThreadFilters;
 
 class ThreadsController extends Controller
 {
@@ -24,28 +25,14 @@ class ThreadsController extends Controller
      * @param Channel $channel
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel)
+    public function index(Channel $channel, ThreadFilters $filters)
     {
         $threads = Thread::latest();
-        //Como eu tinha feito,usando somente $channelSlug = null como parâmetro:
-        // if ($channelSlug) {
-        //     $threads = Thread::join('channels', 'threads.channel_id', 'channels.id')
-        //     ->where('channels.slug', $channelSlug)
-        //     ->orderBy('threads.created_at', 'desc')
-        //     ->get();
-        // }
-
         if ($channel->exists) {
-            $threads = $channel->threads()->latest();
+            $thread = $channel->threads()->latest();
         }
 
-        if ($username = request('by')) {
-            $user = \App\User::where('name', $username)->firstOrFail();
-
-            $threads->where('user_id', $user->id);
-        }
-
-        $threads = $threads->get();
+        $threads = Thread::apply($filter)->get();
 
         return view('threads.index', compact('threads'));
     }

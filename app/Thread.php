@@ -55,4 +55,17 @@ class Thread extends Model
     {
         return $this->belongsTo(Channel::class);
     }
+
+    /**
+     * Aqui eu pego a query que retornou do método apply de ThreadFilters.
+     * Quando eu chamar o método apply aqui
+     *
+     * @param [type] $query
+     * @param [type] $filters
+     * @return void
+     */
+    public function scopeFilter($query, $filters)
+    {
+        return  $filters->apply($query);
+    }
 }
