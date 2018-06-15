@@ -3,40 +3,18 @@
 namespace App\Filters;
 
 use App\User;
-use Illuminate\Support\Facades\Request;
 
-class ThreadFilters
+class ThreadFilters extends Filters
 {
-    protected $request;
-    protected $builder;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
+    protected $filters = ['by'];
 
     /**
-     * É aqui que se aplica os filtros que serão passados para
-     * a página de listagem das threads. Filtro de usuário.
-     * Seu retorno será capturado pelo método scopeFilter do
-     * model.
+     * Filtra a query pelo nome de usuário.
      *
-     *
-     * @param array $builder
-     * @return query
+     * @param string $username
+     * @return mixed
      */
-    public function apply($builder)
-    {
-        $this->builder = $builder;
-
-        if (!$username = $this->request->by) {
-            return $builder;
-        }
-
-        return $this->by($username);
-    }
-
-    public function by()
+    protected function by($username)
     {
         $user = User::where('name', $username)->firstOrFail();
 
