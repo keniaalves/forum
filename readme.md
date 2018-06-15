@@ -15,8 +15,6 @@ No método index então eu chamaria $obj = ClasseFiltro::metodoestaticofiltro($f
 
 4 - Complementando a solução anterior, eu faço um contructor para a nova classe que filtra, passando o request, e faço outra função que verifica se tem usuário. O controller chama o método filter e faz uso dos parâmetros passados ($filter), que está declarado no Model.
 
-5 - Construir um model para a classe de filtro também. 
+5 - Construir uma classe abstrata para Filters. 
 
-
-ReplyCount se tornou um atributo do array/json de thread.
 

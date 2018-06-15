@@ -94,4 +94,25 @@ class ReadThreadsTest extends TestCase
             ->assertSee($threadByKenia->title)
             ->assertDontSee($threadNotByKenia->title);
     }
+
+    /**
+     * Testa se ao filtrar threads pela popularidade somente
+     * retornará o thread com maior número de replies.
+     *
+     * @test
+     */
+    public function test_a_user_can_filter_threads_by_popularity()
+    {
+        //padrão do $this->thread é zero replies
+
+        $threadWithThreeReplies = create('App\Thread');
+        create('App\Reply', ['thread_id' => $threadWithThreeReplies->id], 3);
+
+        $threadWithTwoReplies = create('App\Thread');
+        create('App\Reply', ['thread_id' => $threadWithTwoReplies->id], 2);
+
+        $response = $this->getJson('threads?popularity=1')->json();
+
+        $this->assertEquals([3,2,0], array_column($response, 'replies_count'));
+    }
 }

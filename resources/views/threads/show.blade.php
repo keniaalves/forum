@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Threads</div>
+                <div class="card-header">Thread</div>
                 <div class="card-body">
                         <div class="alert alert-info">
                             <a href="#">{{$thread->owner->name}}</a> posted:
