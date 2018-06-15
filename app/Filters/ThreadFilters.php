@@ -6,7 +6,7 @@ use App\User;
 
 class ThreadFilters extends Filters
 {
-    protected $filters = ['by'];
+    protected $filters = ['by'];//o mesmo filters da classe abstrata Filters, só que com o valor
 
     /**
      * Filtra a query pelo nome de usuário.

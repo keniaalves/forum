@@ -8,6 +8,15 @@ class Thread extends Model
 {
     protected $guarded = [];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('replyCount', function ($builder) {
+            $builder->withCount('replies');
+        });
+    }
+
     /**
      * Retorna um Thread específico pelo id.
      *
@@ -26,6 +35,11 @@ class Thread extends Model
     public function replies()
     {
         return $this->hasMany(Reply::class);
+    }
+
+    public function getReplyCountAttribute()
+    {
+        return $this->replies()->count();
     }
 
     /**
@@ -60,9 +74,11 @@ class Thread extends Model
      * Aqui eu pego a query que retornou do método apply de ThreadFilters.
      * Quando eu chamar o método apply aqui
      *
-     * @param [type] $query
-     * @param [type] $filters
-     * @return void
+     * Aplica todos os filtros relevantes de threads
+     *
+     * @param Builder $query
+     * @param ThreadFilters $filters
+     * @return Builder
      */
     public function scopeFilter($query, $filters)
     {
