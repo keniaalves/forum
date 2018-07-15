@@ -44,6 +44,7 @@
                                 @if (auth()->check())
                                 <li><a href="/threads?by={{ auth()->user()->name }}">My threads</a></li>
                                 @endif
+                                <li><a href="/threads?popular=1">Popular threads</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -93,6 +94,7 @@
 
         <main class="py-4">
             @yield('content')
+            <flash message="{{session('flash')}}"></flash>
         </main>
     </div>
 </body>

@@ -11,7 +11,7 @@
                     @foreach ($threads as $thread)
                         <div class="alert alert-info">
                             <strong><a href="{{$thread->path()}}">{{ $thread->title }}</a></strong> |
-                            <strong>{{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}</strong>
+                            <strong><a href="{{$thread->path()}}">{{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}</a></strong>
                             <hr>
                             {{ $thread->body}}
                         </div>

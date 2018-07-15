@@ -29,12 +29,16 @@ class ThreadsController extends Controller
     {
         $threads = $this->getThreads($channel, $filters);
 
+        if (request()->wantsJson()) {
+            return $threads;
+        }
+
         return view('threads.index', compact('threads'));
     }
 
     public function getThreads(Channel $channel, ThreadFilters $filters)
     {
-        $threads = Thread::latest()->filter($filters);
+        $threads = Thread::with('channel')->latest()->filter($filters);
         if ($channel->exists) {
             $threads->where('channel_id', $channel->id);
         }
@@ -73,7 +77,8 @@ class ThreadsController extends Controller
             'body'      => request('body')
         ]);
 
-        return redirect($thread->path());
+        return redirect($thread->path())
+            ->with('flash', 'Your thread has been publish.');
     }
 
     /**

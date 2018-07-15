@@ -63,7 +63,7 @@ class ReadThreadsTest extends TestCase
      *
      * @return void
      */
-    public function test_a_user_can_filter_threads_according_to_a_channel()
+    public function test_empresa_requer_endereco()
     {
         $channel = create('App\Channel');
 
@@ -111,8 +111,10 @@ class ReadThreadsTest extends TestCase
         $threadWithTwoReplies = create('App\Thread');
         create('App\Reply', ['thread_id' => $threadWithTwoReplies->id], 2);
 
-        $response = $this->getJson('threads?popularity=1')->json();
+        $threadWithNoReplies = $this->thread;
 
-        $this->assertEquals([3,2,0], array_column($response, 'replies_count'));
+        $response = $this->getJson('threads?popular=1')->json();
+
+        $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
     }
 }
