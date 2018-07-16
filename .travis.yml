@@ -1,8 +1,7 @@
 language: php
+php:
+  - 7.1
 
-mysql: 
-  database: 
-    
 before_script:
   - cp .env.travis .env
   - mysql -e 'create database homestead_test;'
@@ -11,3 +10,10 @@ before_script:
 
 script:
 - vendor/bin/phpunit
+
+notifications:
+  email: 
+    recipients:
+      - kap-araujo@outlook.com
+    on_success: change
+    on_failure: always
