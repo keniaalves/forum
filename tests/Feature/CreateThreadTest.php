@@ -30,6 +30,7 @@ class CreateThreadTest extends TestCase
 
     /**
      * Testa se um usuário logado pode criar um thread e vê-lo.
+     * Um comentario que vou tirar
      *
      * @test
      */
