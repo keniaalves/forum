@@ -74,6 +74,12 @@ class CreateThreadTest extends TestCase
             ->assertSessionHasErrors('channel_id');
     }
 
+    /**
+     * Testa se um usuário logado pode publicar threads.
+     *
+     * @param array $overrides
+     * @test
+     */
     public function publishThread($overrides = [])
     {
         $this->withExceptionHandling();
