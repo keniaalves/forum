@@ -8,7 +8,7 @@ class Thread extends Model
 {
     protected $guarded = [];
 
-    protected $with = ['owner', 'channel'];
+    protected $with = ['channel'];
 
     protected static function boot()
     {
@@ -36,9 +36,7 @@ class Thread extends Model
      */
     public function replies()
     {
-        return $this->hasMany(Reply::class)
-            ->withCount('favorites')
-            ->with('owner');
+        return $this->hasMany(Reply::class);
     }
 
     public function getReplyCountAttribute()
@@ -87,5 +85,10 @@ class Thread extends Model
     public function scopeFilter($query, $filters)
     {
         return  $filters->apply($query);
+    }
+
+    public function getFavoritsCountAttributte()
+    {
+        return $this->favorites->count();
     }
 }

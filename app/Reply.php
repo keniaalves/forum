@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
+    use Favoritable;
+
     protected $guarded = [];
+
+    protected $with = ['owner', 'favorites'];
 
     /**
      * Aqui eu digo que esse reply pertence a um dono
@@ -32,6 +36,6 @@ class Reply extends Model
 
     public function isFavorited()
     {
-        return $this->favorites()->where('user_id', auth()->id())->exists();
+        return !!$this->favorites->where('user_id', auth()->id())->count();
     }
 }
