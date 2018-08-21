@@ -75,10 +75,48 @@ class CreateThreadTest extends TestCase
     }
 
     /**
+     * Undocumented function
+     *
+     * @test
+     */
+    public function guests_cannot_delete_threads()
+    {
+        $this->withExceptionHandling();
+        $thread = create('App\Thread');
+
+        $response = $this->delete($thread->path());
+
+        $response->assertRedirect('/login');
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @test
+     */
+    public function a_thread_can_be_deleted()
+    {
+        $this->signIn();
+
+        $thread = create('App\Thread');
+        $reply  = create('App\Reply', ['thread_id' => $thread->id]);
+
+        $response = $this->json('DELETE', $thread->path());
+
+        $response->assertStatus(204);
+
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+    }
+
+    public function threads_may_only_be_deleted_by_those_who_have_permission()
+    {
+    }
+
+    /**
      * Testa se um usuário logado pode publicar threads.
      *
      * @param array $overrides
-     * @test
      */
     public function publishThread($overrides = [])
     {

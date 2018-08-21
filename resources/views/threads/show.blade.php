@@ -8,9 +8,17 @@
                 <div class="card-header">Thread</div>
                 <div class="card-body">
                         <div class="alert alert-info">
-                            <a href="#">{{$thread->owner->name}}</a> posted:
+                            <a href="{{ route('profile', $thread->owner) }}">{{$thread->owner->name}}</a> posted:
                             <strong>{{ $thread->title }}</strong>
                             <hr>
+                            @if(Auth::check())
+                            <form action="{{$thread->path()}}" method="POST">
+                                {{ crsf_field() }}
+                                {{ method_fied('DELETE')}}
+
+                                <button type="submit" class="btn btn-link"></button>
+                            </form>
+                            @endif
                             {{ $thread->body}}
                         </div>
                 </div>
