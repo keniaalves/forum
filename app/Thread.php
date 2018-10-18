@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+    use RecordsActivity;
+
     protected $guarded = [];
 
     protected $with = ['channel'];
@@ -20,15 +22,6 @@ class Thread extends Model
 
         static::deleting(function ($thread) {
             $thread->replies()->delete();
-        });
-
-        static::created(function ($thread) {
-            Activity::create([
-                'type'         => 'created_thread',
-                'user_id'      => auth()->id(),
-                'subject_id'   => $thread->id,
-                'subject_type' => 'App\Thread'
-            ]);
         });
     }
 
