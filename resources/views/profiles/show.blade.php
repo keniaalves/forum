@@ -8,19 +8,10 @@
         </h1>
         <small>Since {{ $profileUser->created_at->diffForHumans()}}</small>
     </div>
-    @foreach($threads as $thread)
-    <div class="card">
-        <div class="card-header">Thread</div>
-        <div class="card-body">
-                <div class="alert alert-info">
-                    <a href="{{ route('profile', $thread->owner)}}">{{$thread->owner->name}}</a> posted:
-                    <strong><a href="{{$thread->path()}}">{{ $thread->title }}</a></strong>
-                    <hr>
-                    {{ $thread->body}}
-                </div>
-        </div>
-    </div>
+    @foreach($activities as $date => $activity)
+        @foreach($activity as $record)
+            @include( "profiles.activities.{$record->type}", ['activity' => $record] )
+        @endforeach
     @endforeach
-    {{ $threads->links() }}
 </div>
 @endsection
