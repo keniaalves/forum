@@ -13,8 +13,8 @@
         <div class="card-header">Thread</div>
         <div class="card-body">
                 <div class="alert alert-info">
-                    <a href="#">{{$thread->owner->name}}</a> posted:
-                    <strong>{{ $thread->title }}</strong>
+                    <a href="{{ route('profile', $thread->owner)}}">{{$thread->owner->name}}</a> posted:
+                    <strong><a href="{{$thread->path()}}">{{ $thread->title }}</a></strong>
                     <hr>
                     {{ $thread->body}}
                 </div>

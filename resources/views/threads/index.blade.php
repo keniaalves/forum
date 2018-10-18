@@ -8,14 +8,16 @@
                 <div class="card-header">Forum threads</div>
 
                 <div class="card-body">
-                    @foreach ($threads as $thread)
+                    @forelse ($threads as $thread)
                         <div class="alert alert-info">
                             <strong><a href="{{$thread->path()}}">{{ $thread->title }}</a></strong> |
                             <strong><a href="{{$thread->path()}}">{{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}</a></strong>
                             <hr>
                             {{ $thread->body}}
                         </div>
-                    @endforeach
+                        @empty
+                        <p>There are no relevant results at this time.</p>
+                    @endforelse
                 </div>
             </div>
         </div>
