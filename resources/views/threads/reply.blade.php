@@ -1,5 +1,5 @@
 
-<div class="alert alert-default">
+<div id="reply-{{ $reply->id }}" class="alert alert-default">
     {{ $reply->created_at->diffForHumans() }} |
     <a href="{{ route('profile', $reply->owner) }}">{{$reply->owner->name}}</a>
     <form method="POST" action="/replies/{{ $reply->id }}/favorites">
