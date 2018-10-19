@@ -13922,7 +13922,7 @@ try {
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
-
+window.Vue = __webpack_require__(36);
 window.axios = __webpack_require__(17);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -13957,6 +13957,12 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+window.events = new Vue();
+
+window.flash = function (message) {
+  window.events.$emit('flash', message);
+};
 
 /***/ }),
 /* 14 */
@@ -47720,11 +47726,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         if (this.message) {
-            this.body = this.message;
+            this.flash(this.message);
+        }
+
+        window.events.$on('flash', function (message) {
+            return _this.flash(message);
+        });
+    },
+
+    methods: {
+        flash: function flash(message) {
+            this.body = message;
             this.show = true;
 
+            this.hide();
+        },
+        hide: function hide() {
+            var _this2 = this;
+
             setTimeout(function () {
-                _this.show = false;
+                _this2.show = false;
             }, 3000);
         }
     }
