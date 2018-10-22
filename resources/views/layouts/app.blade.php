@@ -12,6 +12,11 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!}
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -19,6 +24,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        body { padding-bottom: 100px;}
+        .level { display: flex; align-items: center; }
+        .flex { flex: 1; }
+        .mr-1 { margin-right: 1em; }
+        [v-cloak]{ display: none; }
+    </style>
 </head>
 <body>
     <div id="app">
