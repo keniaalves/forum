@@ -6,12 +6,13 @@
             <a href="{{ route('profile', $reply->owner) }}">{{$reply->owner->name}}</a>
         </div>
         <div class="level">
-            <favorite :reply="{{ $reply }}"></favorite>
-                @can('update', $reply)
-                
+            @if(auth::check())
+                <favorite :reply="{{ $reply }}"></favorite>
+            @endif
+            @can('update', $reply)
                 <button class="btn btn-success btn-xs" @click="editing = true">Editar</button>
                 <button class="btn btn-danger btn-xs" @click="destroy">Delete</button>
-                @endcan
+            @endcan
         </div>
         </div> 
             <div v-if="editing">
