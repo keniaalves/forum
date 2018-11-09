@@ -31,23 +31,11 @@
             <div class="card">
                 <div class="card-header">Replies</div>
                 <div class="card-body">
-                <replies :data="{{ $thread->replies }}" @remove="repliesCount--"></replies>
+                <replies :data="{{ $thread->replies }}" @added="repliesCount++" @removed="repliesCount--"></replies>
 
                     <!-- {{ $replies->links() }}  -->
                 </div>
             </div>
-
-            @if(auth()->check())
-
-            <form action="{{$thread->path() . '/replies'}}" method="POST">
-                {{ csrf_field() }}
-                <textarea name="body" id="" cols="30" rows="4" class="form-control" placeholder="Have something to say?"></textarea>
-                <button type="submit" class="btn btn-default">Post</button>
-            </form>
-
-            @else
-    <p>Please  <a href="{{route('login')}}">sign in</a> to participate in this discussion.</p>
-@endif
         </div>
         <div class="col-md-4">
             <div class="card">
