@@ -13,6 +13,7 @@ class RepliesController extends Controller
         $this->middleware('auth');
     }
 
+    //Salva as respostas
     public function store($channelId, Thread $thread)
     {
         $this->validate(request(), [
