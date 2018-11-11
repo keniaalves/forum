@@ -2,7 +2,7 @@
   <div :id="'reply-'+id" class="alert alert-default">
       <div class="level">
           <div class="flex">
-              {{data.created_at}} |
+              <span v-text="ago"></span>
               <a :href="'/profiles/' + data.owner.name"
               v-text="data.owner.name"></a>
           </div>
@@ -30,6 +30,7 @@
 </template>
 <script>
 import Favorite from './Favorite.vue';
+import moment from 'moment';
 export default {
     props: ['data'],
 
@@ -44,6 +45,9 @@ export default {
     },
 
     computed: {
+      ago() {
+        return moment(this.data.created_at).fromNow();
+      },
       signedIn() {
         return window.App.signedIn;
       },

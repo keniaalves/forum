@@ -9,7 +9,7 @@
                 placeholder="Have something to say?"
                 required
                 v-model="body"></textarea>
-
+      <br>
       <button type="submit"
               class="btn btn-default"
                   @click="addReply">Post</button>

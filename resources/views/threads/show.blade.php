@@ -30,14 +30,12 @@
 
             <div class="card">
                 <div class="card-header">Replies</div>
-                <div class="card-body">
-                <replies :data="{{ $thread->replies }}" @added="repliesCount++" @removed="repliesCount--"></replies>
-
-                    <!-- {{ $replies->links() }}  -->
+                  <div class="card-body">
+                  <replies @added="repliesCount++" @removed="repliesCount--"></replies>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
+              </div>
+          </div>
+          <div class="col-md-4">
             <div class="card">
                 <div class="card-header">Threads</div>
                 <div class="card-body">
