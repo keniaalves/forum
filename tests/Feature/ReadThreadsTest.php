@@ -44,20 +44,6 @@ class ReadThreadsTest extends TestCase
     }
 
     /**
-     * Testa se um usuário pode ler respostas associadas a um thread.
-     *
-     * @test
-     */
-    public function test_a_user_can_read_replies_that_are_associated_with_a_thread()
-    {
-        $reply = factory('App\Reply')
-            ->create(['thread_id' => $this->thread->id]);
-
-        $this->get($this->thread->path())
-            ->assertSee($reply->body);
-    }
-
-    /**
      * Testa se, quando o usuário acessa uma rota de listagem de threads filtrando
      * pelo channel, ele consegue ver somente os threads daquele channel e não outros.
      *
@@ -118,6 +104,17 @@ class ReadThreadsTest extends TestCase
         $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
     }
 
+    public function a_user_can_filter_threads_by_those_that_are_unanswered()
+    {
+      $thread = create('App\Thread');
+
+      create('App\Reply', ['thread_id' => $thread->id]);
+
+      $response = $this->getJson('threads?unanswered=1')->json();
+
+      $this->assertCount(1, $response);
+    }
+
     /**@test*/
     public function test_a_user_can_request_all_replies_for_a_given_thread()
     {
@@ -127,7 +124,9 @@ class ReadThreadsTest extends TestCase
 
       $response = $this->getJson($thread->path() . '/replies')->json();
 
-      $this->assertCount(1, $response['data']);
+      // dd($response);
+
+      $this->assertCount(2, $response['data']);
       $this->assertEquals(2, $response['total']);
     }
 }
