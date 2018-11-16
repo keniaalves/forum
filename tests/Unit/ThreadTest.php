@@ -46,10 +46,7 @@ class ThreadTest extends TestCase
     }
 
     /**
-     * Testa se uma thread pode adicionar uma reply.
-     * Testa a relação no model.
-     *
-     * @return void
+     * @test
      */
     public function test_a_thread_can_add_a_reply()
     {
@@ -61,8 +58,40 @@ class ThreadTest extends TestCase
         $this->assertCount(1, $this->thread->replies);
     }
 
+    /**
+    * @test
+    */
     public function a_thread_belongs_to_a_channel()
     {
         $this->thread->assertInstanceOf('App\Channel', $this->thread->channel);
+    }
+
+  /**
+  * @test
+  */
+    public function a_thread_can_be_subscribed_to()
+    {
+      $thread = create('App\Thread');
+
+      $this->signIn();
+
+      $thread->subscribe();
+
+      $this->assertEquals(1,$thread->subscriptions()->where('user_id', auth()->id())->count());
+
+    }
+
+    /**
+    * @test
+    */
+    public function a_thread_can_be_unsubscribed_from()
+    {
+      $thread = create('App\Thread');
+
+      $thread->subscribe($userId = 1);
+
+      $thread->unsubscribe($userId);
+
+      $this->assertCount(0, $thread->subscriptions);
     }
 }

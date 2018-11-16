@@ -32,7 +32,7 @@ import collection from '../mixins/collection.js';
       },
       url(page) {
         if(!page) {
-          let query = location.search.match(/page=(\d+));
+          let query = location.search.match(/page=(\d+)/);
           page = query ? query[1] : 1;
         }
         return `${location.pathname}/replies?page=${page}`;
