@@ -35,15 +35,22 @@
                 </div>
               </div>
           </div>
+
           <div class="col-md-4">
             <div class="card">
                 <div class="card-header">Threads</div>
                 <div class="card-body">
+                  <p>
                       This threads was published {{ $thread->created_at->diffForHumans() }} by <a href="{{ route('profile', $thread->owner) }}">{{ $thread->owner->name }}</a>
                       and currently has <span v-text="repliesCount"></span> {{ str_plural('reply', $thread->replies_count )}}.
+                  </p>
+                  <p>
+                      <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
+                  </p>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 </thread-view>
