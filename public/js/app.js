@@ -41328,7 +41328,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(139);
-module.exports = __webpack_require__(194);
+module.exports = __webpack_require__(197);
 
 
 /***/ }),
@@ -41355,7 +41355,7 @@ window.Vue = __webpack_require__(8);
 Vue.component('flash', __webpack_require__(164));
 Vue.component('paginator', __webpack_require__(172));
 Vue.component('thread-view', __webpack_require__(175));
-Vue.component('user-notifications', __webpack_require__(198));
+Vue.component('user-notifications', __webpack_require__(194));
 
 var app = new Vue({
   el: '#app'
@@ -65554,23 +65554,14 @@ if (false) {
 
 /***/ }),
 /* 194 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(200)
+var __vue_script__ = __webpack_require__(195)
 /* template */
-var __vue_template__ = __webpack_require__(199)
+var __vue_template__ = __webpack_require__(196)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -65609,7 +65600,49 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 199 */
+/* 195 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return { notifications: false };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get("/profiles/" + window.App.user.name + "/notifications").then(function (response) {
+      return _this.notifications = response.data;
+    });
+  },
+
+  methods: {
+    markAsRead: function markAsRead(notification) {
+      axios.delete('/profiles/' + window.App.user.name + '/notifications/' + notification.id);
+    }
+  }
+});
+
+/***/ }),
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -65625,7 +65658,15 @@ var render = function() {
           { staticClass: "dropdown-menu" },
           _vm._l(_vm.notifications, function(notification) {
             return _c("li", [
-              _c("a", { attrs: { href: "#" } }, [_vm._v("FooBar")])
+              _c("a", {
+                attrs: { href: notification.data.link },
+                domProps: { textContent: _vm._s(notification.data.message) },
+                on: {
+                  click: function($event) {
+                    _vm.markAsRead(notification)
+                  }
+                }
+              })
             ])
           })
         )
@@ -65657,38 +65698,10 @@ if (false) {
 }
 
 /***/ }),
-/* 200 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 197 */
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return { notifications: ['damage'] };
-  },
-  created: function created() {
-    var _this = this;
-
-    axios.get("/profiles/" + window.App.user.name + "/notifications");
-    then(function (response) {
-      return _this.notifications = response.data;
-    });
-  }
-});
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
