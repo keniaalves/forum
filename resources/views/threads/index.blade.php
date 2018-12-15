@@ -9,9 +9,18 @@
 
                 <div class="card-body">
                     @forelse ($threads as $thread)
-                        <div class="alert alert-info">
-                            <strong><a href="{{$thread->path()}}">{{ $thread->title }}</a></strong> |
-                            <strong><a href="{{$thread->path()}}">{{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}</a></strong>
+                    <div class="alert alert-info">
+                      <div class="d-flex justify-content-between">
+
+                        @if(auth()->check() && $thread->hasupdatesFor(auth()->user()))
+                        <strong>
+                          <a href="{{$thread->path()}}">{{ $thread->title }}</a>
+                        </strong>
+                        @else
+                          <a href="{{$thread->path()}}">{{ $thread->title }}</a>
+                        @endif
+                            <a href="{{$thread->path()}}">{{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}</a>
+                        </div>
                             <hr>
                             {{ $thread->body}}
                         </div>

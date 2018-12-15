@@ -25,7 +25,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 Route::get('/threads', 'ThreadsController@index');
 Route::get('/threads/create', 'ThreadsController@create');
-Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
 Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy');
 Route::post('/threads', 'ThreadsController@store')->name('threadStore');
 Route::get('/threads/{channel}', 'ThreadsController@index');
@@ -40,3 +39,4 @@ Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsC
 Route::patch('/replies/{reply}', 'RepliesController@update');
 Route::get('/profiles/{user}/notifications/', 'UserNotificationsController@index');
 Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy');
+Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
